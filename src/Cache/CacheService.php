@@ -2,9 +2,14 @@
 
 namespace {
 
-    if (false === function_exists('db')) {
+    use Max\Cache\Setter;
 
-        function cache(string $id)
+    if (false === function_exists('cache')) {
+        /**
+         * Cache操作
+         * @return Setter
+         */
+        function cache()
         {
             return app('cache');
         }
