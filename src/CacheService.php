@@ -1,7 +1,7 @@
 <?php
 
 namespace {
-    
+
     if (false === function_exists('db')) {
 
         function cache(string $id)
@@ -29,6 +29,26 @@ namespace Max\Cache {
             app('config')->load('cache');
         }
 
+    }
+}
+
+namespace Max\Facade {
+
+    /**
+     * @method static string get(string $key)
+     * @method static bool has(string $key)
+     * @method static bool set(string $key, string $value, int $timeout = null)
+     * @method static \Redis handle()
+     * Class Cache
+     * @package Max\Facade
+     */
+    class Cache extends Facade
+    {
+
+        protected static function getFacadeClass()
+        {
+            return 'cache';
+        }
     }
 }
 
