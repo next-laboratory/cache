@@ -1,5 +1,6 @@
 {
   "name": "max/cache",
+  "type": "library",
   "authors": [
     {
       "name": "chengyao",
