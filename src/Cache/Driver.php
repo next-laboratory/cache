@@ -62,7 +62,7 @@ abstract class Driver implements CacheItemPoolInterface
 
     abstract public function get(string $key);
 
-    abstract public function set(string $key, string $value);
+    abstract public function set(string $key, $value);
 
     abstract public function has(string $key);
 

@@ -40,7 +40,7 @@ class File extends Driver
      * @return false|int
      * false 写入失败，int 写入的字节
      */
-    public function set(string $key, string $value)
+    public function set(string $key, $value)
     {
         return file_put_contents($this->path . strtolower($key), $value);
     }

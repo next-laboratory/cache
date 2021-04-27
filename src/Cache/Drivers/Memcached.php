@@ -38,7 +38,7 @@ class Memcached extends Driver
         return $this->handle()->get($key);
     }
 
-    public function set(string $key, string $value, int $timeout = null)
+    public function set(string $key, $value, int $timeout = null)
     {
         return $this->handle()->set($key, $value, $timeout);
     }

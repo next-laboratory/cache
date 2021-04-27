@@ -109,7 +109,7 @@ class Redis extends Driver
      * @param int|null $timeout
      * @return bool
      */
-    public function set(string $key, string $value, int $timeout = null)
+    public function set(string $key, $value, int $timeout = null)
     {
         return $this->handle()->set($key, $value, $timeout);
     }
