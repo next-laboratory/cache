@@ -9,7 +9,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "Max\\Cache\\": "src"
+      "Max\\Cache\\": "src/Cache/"
     }
   },
   "require": {
