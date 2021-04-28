@@ -105,4 +105,12 @@ class File extends Driver
     {
         return file_put_contents($this->path . $this->_uniqueName($key), $value);
     }
+
+    public function clear()
+    {
+        //TODO debug
+        array_map('unlink', glob($this->path . '*'));
+    }
+
+
 }
