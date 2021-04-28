@@ -115,13 +115,17 @@ class Redis extends Driver
     }
 
     /**
-     * 获取
+     * Redis缓存获取
      * @param string $key
-     * @return bool|mixed|string
+     * @param null $default
+     * @return bool|mixed|string|void|null
      */
     public function get($key, $default = NULL)
     {
-        return $this->handle()->get($key);
+        if (false === ($value = $this->handle()->get($key))) {
+            return $default;
+        }
+        return $value;
     }
 
     /**
