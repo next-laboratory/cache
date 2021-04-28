@@ -161,7 +161,7 @@ class Redis extends Driver
      */
     public function has($key)
     {
-        return $this->handle()->exists($key);
+        return $this->handle()->exists($key) ? true : false;
     }
 
 
