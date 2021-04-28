@@ -33,7 +33,7 @@ class Memcached extends Driver
         return $this->memcached;
     }
 
-    public function get($key)
+    public function get($key, $default = NULL)
     {
         return $this->handle()->get($key);
     }

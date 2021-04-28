@@ -119,7 +119,7 @@ class Redis extends Driver
      * @param string $key
      * @return bool|mixed|string
      */
-    public function get($key)
+    public function get($key, $default = NULL)
     {
         return $this->handle()->get($key);
     }
