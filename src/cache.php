@@ -3,10 +3,10 @@
 return [
 
     //默认缓存类型
-    'default'     => 'file',
+    'default'   => 'file',
 
     // redis缓存
-    'redis'       => [
+    'redis'     => [
         //主机
         'host'    => '127.0.0.1',
         //端口
@@ -22,13 +22,13 @@ return [
     ],
 
     //文件缓存
-    'file'        => [
-
+    'file'      => [
+        'expire' => 600
     ],
 
     //memcached缓存
-    'memcached'   => [
-        'host'    => '127.0.0.1',
-        'port'    => 11211
+    'memcached' => [
+        'host' => '127.0.0.1',
+        'port' => 11211
     ]
 ];

@@ -14,6 +14,7 @@ namespace {
             return app('cache');
         }
     }
+
 }
 
 
@@ -35,6 +36,7 @@ namespace Max\Cache {
         }
 
     }
+
 }
 
 

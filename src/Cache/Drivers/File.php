@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Max\Cache\Drivers;
 
 use Max\Cache\Driver;
+use Max\Foundation\App;
 
 class File extends Driver
 {
@@ -15,13 +16,20 @@ class File extends Driver
     protected $path;
 
     /**
+     * 过期时间
+     * @var
+     */
+    protected $expire;
+
+    /**
      * 初始化缓存路径
      * File constructor.
      * @throws \Exception
      */
-    public function __construct()
+    public function __construct(App $app)
     {
-        $this->path = env('cache_path') . 'app' . DIRECTORY_SEPARATOR;
+        $this->expire = $app->config->get('cache.file.expire', 600);
+        $this->path   = env('cache_path') . 'app' . DIRECTORY_SEPARATOR;
         \Max\Tools\File::mkdir($this->path);
     }
 
@@ -32,8 +40,17 @@ class File extends Driver
      */
     public function has($key)
     {
-        return file_exists($this->path . $this->_uniqueName($key));
+        $cacheFile = $this->path . $this->_uniqueName($key);
+        if (file_exists($cacheFile)) {
+            if (filemtime($cacheFile) + $this->expire < time()) {
+                $this->delete($key);
+                return false;
+            }
+            return true;
+        }
+        return false;
     }
+
 
     /**
      * 缓存hash
