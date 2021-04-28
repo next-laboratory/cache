@@ -16,6 +16,6 @@
   },
   "require": {
     "php": ">=7.0.9",
-    "psr/cache": "^1.0"
+    "psr/simple-cache": "^1.0"
   }
 }

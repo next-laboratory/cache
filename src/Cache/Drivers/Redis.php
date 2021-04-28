@@ -109,9 +109,9 @@ class Redis extends Driver
      * @param int|null $timeout
      * @return bool
      */
-    public function set(string $key, $value, int $timeout = null)
+    public function set($key, $value, $ttl = NULL)
     {
-        return $this->handle()->set($key, $value, $timeout);
+        return $this->handle()->set($key, $value, $ttl);
     }
 
     /**
@@ -119,7 +119,7 @@ class Redis extends Driver
      * @param string $key
      * @return bool|mixed|string
      */
-    public function get(string $key)
+    public function get($key)
     {
         return $this->handle()->get($key);
     }
@@ -129,7 +129,7 @@ class Redis extends Driver
      * @param string $key
      * @return bool|int
      */
-    public function has(string $key)
+    public function has($key)
     {
         return $this->handle()->exists($key);
     }

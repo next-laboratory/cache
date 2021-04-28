@@ -3,26 +3,24 @@ declare(strict_types=1);
 
 namespace Max\Cache;
 
-use Psr\Cache\CacheItemInterface;
-use Psr\Cache\CacheItemPoolInterface;
-use Psr\Cache\InvalidArgumentException;
+use Psr\SimpleCache\CacheInterface;
 
-abstract class Driver implements CacheItemPoolInterface
+abstract class Driver implements CacheInterface
 {
 
-    public function getItem($key)
+    public function get($key, $default = null)
     {
-        // TODO: Implement getItem() method.
+        // TODO: Implement get() method.
     }
 
-    public function getItems(array $keys = array())
+    public function set($key, $value, $ttl = null)
     {
-        // TODO: Implement getItems() method.
+        // TODO: Implement set() method.
     }
 
-    public function hasItem($key)
+    public function delete($key)
     {
-        // TODO: Implement hasItem() method.
+        // TODO: Implement delete() method.
     }
 
     public function clear()
@@ -30,40 +28,24 @@ abstract class Driver implements CacheItemPoolInterface
         // TODO: Implement clear() method.
     }
 
-    public function deleteItem($key)
+    public function getMultiple($keys, $default = null)
     {
-        // TODO: Implement deleteItem() method.
+        // TODO: Implement getMultiple() method.
     }
 
-    public function deleteItems(array $keys)
+    public function setMultiple($values, $ttl = null)
     {
-        // TODO: Implement deleteItems() method.
+        // TODO: Implement setMultiple() method.
     }
 
-    public function save(CacheItemInterface $item)
+    public function deleteMultiple($keys)
     {
-        // TODO: Implement save() method.
+        // TODO: Implement deleteMultiple() method.
     }
 
-    public function saveDeferred(CacheItemInterface $item)
+    public function has($key)
     {
-        // TODO: Implement saveDeferred() method.
+        // TODO: Implement has() method.
     }
-
-    public function commit()
-    {
-        // TODO: Implement commit() method.
-    }
-
-    public function handle()
-    {
-        return $this;
-    }
-
-    abstract public function get(string $key);
-
-    abstract public function set(string $key, $value);
-
-    abstract public function has(string $key);
 
 }

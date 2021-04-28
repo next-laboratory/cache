@@ -20,12 +20,12 @@ class File extends Driver
         \Max\Tools\File::mkdir($this->path);
     }
 
-    public function has(string $key)
+    public function has($key)
     {
         return file_exists($this->path . strtolower($key));
     }
 
-    public function get(string $key)
+    public function get($key, $default = null)
     {
         if ($this->has($key)) {
             return file_get_contents($this->path . strtolower($key));
@@ -40,7 +40,7 @@ class File extends Driver
      * @return false|int
      * false 写入失败，int 写入的字节
      */
-    public function set(string $key, $value)
+    public function set($key, $value, $ttl = NULL)
     {
         return file_put_contents($this->path . strtolower($key), $value);
     }
