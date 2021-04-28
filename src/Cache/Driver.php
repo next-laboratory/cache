@@ -8,13 +8,6 @@ use Psr\SimpleCache\CacheInterface;
 abstract class Driver implements CacheInterface
 {
 
-    abstract public function has($key);
-
-    abstract public function set($key, $value, $ttl = null);
-
-    abstract function get($key, $default = null);
-
-
     /**
      * 检查key是否是一个合法的类型
      * @param $key
