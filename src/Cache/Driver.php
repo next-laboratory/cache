@@ -8,24 +8,32 @@ use Psr\SimpleCache\CacheInterface;
 abstract class Driver implements CacheInterface
 {
 
-    public function get($key, $default = null)
-    {
-        // TODO: Implement get() method.
-    }
+    abstract public function has($key);
 
-    public function set($key, $value, $ttl = null)
+    abstract public function set($key, $value, $ttl = null);
+
+    abstract function get($key, $default = null);
+
+
+    /**
+     * 检查key是否是一个合法的类型
+     * @param $key
+     * @return $this
+     */
+    protected function _checkKey($key)
     {
-        // TODO: Implement set() method.
+        if (false === is_scalar($key)) {
+            throw new InvalidArgumentException();
+        }
+        return $this;
     }
 
     public function delete($key)
     {
-        // TODO: Implement delete() method.
     }
 
     public function clear()
     {
-        // TODO: Implement clear() method.
     }
 
     public function getMultiple($keys, $default = null)
@@ -41,11 +49,6 @@ abstract class Driver implements CacheInterface
     public function deleteMultiple($keys)
     {
         // TODO: Implement deleteMultiple() method.
-    }
-
-    public function has($key)
-    {
-        // TODO: Implement has() method.
     }
 
 }

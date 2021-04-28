@@ -73,6 +73,15 @@ class Redis extends Driver
     }
 
     /**
+     * 获取执行命令的次数
+     * @return int
+     */
+    public function getExecedTimes()
+    {
+        return $this->count;
+    }
+
+    /**
      * 连接Redis
      * @param $config
      * @return $this
@@ -111,21 +120,38 @@ class Redis extends Driver
      */
     public function set($key, $value, $ttl = NULL)
     {
-        return $this->handle()->set($key, $value, $ttl);
+        return $this->_checkKey($key)
+            ->handle()
+            ->set($key, $value, $ttl);
     }
+
 
     /**
      * Redis缓存获取
      * @param string $key
      * @param null $default
-     * @return bool|mixed|string|void|null
+     * @return bool|mixed|string|null
+     * @throws InvalidArgumentException
      */
     public function get($key, $default = NULL)
     {
-        if (false === ($value = $this->handle()->get($key))) {
+        if (false === ($value = $this->_checkKey($key)->handle()->get($key))) {
             return $default;
         }
         return $value;
+    }
+
+    /**
+     * 删除一个缓存
+     * @param string $key
+     * 标量的key
+     * @return bool|void
+     */
+    public function delete($key)
+    {
+        return $this->_checkKey($key)
+            ->handle()
+            ->del($key) ? true : false;
     }
 
     /**
@@ -137,4 +163,15 @@ class Redis extends Driver
     {
         return $this->handle()->exists($key);
     }
+
+
+    /**
+     * 删除所有缓存
+     * @return bool|void
+     */
+    public function clear()
+    {
+        return $this->handle()->flushAll();
+    }
+
 }

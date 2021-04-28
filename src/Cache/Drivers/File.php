@@ -46,6 +46,20 @@ class File extends Driver
     }
 
     /**
+     * 删除文件缓存，缓存不存在直接返回true
+     * @param string $key
+     * @return bool|void
+     */
+    public function delete($key)
+    {
+        if ($this->has($key)) {
+            return unlink($this->path . $this->_uniqueName($key));
+        }
+        return true;
+    }
+
+
+    /**
      * 文件缓存设置
      * @param string $key
      * @param null $default
