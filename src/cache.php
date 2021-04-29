@@ -23,7 +23,7 @@ return [
 
     //文件缓存
     'file'      => [
-        'expire' => 600
+        'expire' => 0
     ],
 
     //memcached缓存

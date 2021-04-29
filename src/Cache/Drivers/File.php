@@ -28,7 +28,7 @@ class File extends Driver
      */
     public function __construct(App $app)
     {
-        $this->expire = $app->config->get('cache.file.expire', 600);
+        $this->expire = $app->config->get('cache.file.expire', 0);
         $this->path   = env('cache_path') . 'app' . DIRECTORY_SEPARATOR;
         \Max\Tools\File::mkdir($this->path);
     }
@@ -42,8 +42,8 @@ class File extends Driver
     {
         $cacheFile = $this->path . $this->_uniqueName($key);
         if (file_exists($cacheFile)) {
-            if (filemtime($cacheFile) + $this->expire < time()) {
-                $this->delete($key);
+            if (0 !== $this->expire && filemtime($cacheFile) + $this->expire < time()) {
+                $this->_remove($key);
                 return false;
             }
             return true;
@@ -62,6 +62,11 @@ class File extends Driver
         return md5(strtolower($key));
     }
 
+    private function _remove($key)
+    {
+        return unlink($this->path . $this->_uniqueName($key));
+    }
+
     /**
      * 删除文件缓存，缓存不存在直接返回true
      * @param string $key
@@ -70,7 +75,7 @@ class File extends Driver
     public function delete($key)
     {
         if ($this->has($key)) {
-            return unlink($this->path . $this->_uniqueName($key));
+            return $this->_remove($key);
         }
         return true;
     }
