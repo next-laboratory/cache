@@ -17,8 +17,5 @@
   "require": {
     "php": ">=7.0.9",
     "psr/simple-cache": "^1.0"
-  },
-  "scripts": {
-    "post-install-cmd": "Max\\Cache\\Install::install"
   }
 }
