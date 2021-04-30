@@ -27,12 +27,12 @@ namespace Max\Cache {
 
         public function register()
         {
-            app()->bind('cache', Setter::class);
+            $this->app->bind('cache', Setter::class);
         }
 
         public function boot()
         {
-            app('config')->load('cache');
+            $this->app->config->load('cache');
         }
 
     }
