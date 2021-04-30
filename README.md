@@ -13,4 +13,65 @@
 
 Max框架缓存扩展
 
+# 安装
+
+```
+composer require max/cache:dev-master --prefer-dist
+```
+
+# 使用
+
+## 注册服务提供者
+
+在`/config/provider.php` 的`http`中注册服务提供者类`\Max\Cache\CacheService::class`
+
+## 新建配置文件
+
+安装完成需要在`/config`目录中新建`cache.php`配置文件，文件内容如下：
+
+```php
+<?php
+
+return [
+
+    //默认缓存类型
+    'default'   => 'file',
+
+    // redis缓存
+    'redis'     => [
+        //主机
+        'host'    => '127.0.0.1',
+        //端口
+        'port'    => 6379,
+        //默认db
+        'default' => 0,
+        //连接超时时间
+        'timeout' => 2,
+        //认证用密码
+        'auth'    => 'cheng',
+        //连接失败后重新连接的次数
+        'retry'   => 2
+    ],
+
+    //文件缓存
+    'file'      => [
+        //默认的过期时间
+        'expire' => 0
+    ],
+
+    //memcached缓存
+    'memcached' => [
+        //主机
+        'host' => '127.0.0.1',
+        //端口
+        'port' => 11211
+    ]
+];
+
+```
+
+## 助手函数
+
+安装完成后就可以使用`\Max\Facade\Cache::get($key);`等的方式来使用缓存扩展，或者使用助手函数`cache()`
+
 > 官网：https://www.chengyao.xyz

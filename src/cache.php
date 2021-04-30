@@ -23,12 +23,15 @@ return [
 
     //文件缓存
     'file'      => [
+        //默认的过期时间
         'expire' => 0
     ],
 
     //memcached缓存
     'memcached' => [
+        //主机
         'host' => '127.0.0.1',
+        //端口
         'port' => 11211
     ]
 ];
