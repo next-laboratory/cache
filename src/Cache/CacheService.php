@@ -22,7 +22,7 @@ namespace Max\Cache {
 
     use Max\Contracts\Service;
 
-    class CacheService implements Service
+    class CacheService extends Service
     {
 
         public function register()
