@@ -32,7 +32,6 @@ namespace Max\Cache {
 
         public function boot()
         {
-            $this->app->config->load('cache');
         }
 
     }
