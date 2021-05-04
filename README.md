@@ -11,7 +11,7 @@
 <img src="https://img.shields.io/badge/license-apache%202-blue">
 </p>
 
-Max框架缓存扩展
+Max框架缓存组件
 
 # 安装
 

@@ -18,7 +18,7 @@ namespace {
 }
 
 
-namespace Max\Cache {
+namespace Max {
 
     use Max\Contracts\Service;
 
@@ -27,7 +27,7 @@ namespace Max\Cache {
 
         public function register()
         {
-            $this->app->bind('cache', Setter::class);
+            $this->app->bind('cache', \Max\Cache\Setter::class);
         }
 
         public function boot()
