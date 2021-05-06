@@ -27,7 +27,7 @@ composer require max/cache:dev-master --prefer-dist
 
 ## 配置文件
 
-安装完成后框架会自动将配置文件移动到根包的`config`目录下，如果创建失败，可以手动创建。
+安装完成后框架会自动将配置文件`cache.php`移动到根包的`config`目录下，如果创建失败，可以手动创建。
 
 文件内容如下：
 
