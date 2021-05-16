@@ -16,14 +16,14 @@ Max框架缓存组件
 # 安装
 
 ```
-composer require max/cache:dev-master --prefer-dist
+composer require max/cache:dev-master
 ```
 
 # 使用
 
 ## 注册服务提供者
 
-在`/config/provider.php` 的`http`中注册服务提供者类`\Max\Cache\CacheService::class`
+在`/config/provider.php` 的`http`中注册服务提供者类`\Max\CacheService::class`
 
 ## 新建配置文件
 
