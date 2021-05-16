@@ -25,9 +25,11 @@ composer require max/cache:dev-master
 
 在`/config/provider.php` 的`http`中注册服务提供者类`\Max\CacheService::class`
 
-## 新建配置文件
+## 配置文件
 
-安装完成需要在`/config`目录中新建`cache.php`配置文件，文件内容如下：
+安装完成后框架会自动将配置文件`cache.php`移动到根包的`config`目录下，如果创建失败，可以手动创建。
+
+文件内容如下：
 
 ```php
 <?php
