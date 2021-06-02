@@ -23,7 +23,7 @@ composer require max/cache:dev-master
 
 ## 注册服务提供者
 
-在`/config/provider.php` 的`http`中注册服务提供者类`\Max\CacheService::class`
+在`/config/app.php` 的`provider`下的`http`中注册服务提供者类`\Max\CacheService::class`
 
 ## 配置文件
 
