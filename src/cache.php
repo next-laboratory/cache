@@ -22,10 +22,7 @@ return [
     ],
 
     //文件缓存
-    'file'      => [
-        //默认的过期时间
-        'expire' => 0
-    ],
+    'file'      => [],
 
     //memcached缓存
     'memcached' => [
