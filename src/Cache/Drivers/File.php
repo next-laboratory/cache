@@ -60,7 +60,7 @@ class File extends Driver
     {
         if (!isset($this->cache[$cacheFile])) {
             if (false === ($value = file_get_contents($cacheFile))) {
-                throw new \InvalidArgumentException('Cache not found: ' . $key, 999);
+                throw new \InvalidArgumentException('Cache not found: ' . $cacheFile, 999);
             }
             $this->cache[$cacheFile] = $value;
         }
@@ -120,9 +120,7 @@ class File extends Driver
     public function get($key, $default = null)
     {
         if ($this->has($key)) {
-            $cache = $this->getCache($this->getFile($key));
-            [$expire, $value] = [substr($cache, 0, 10), substr($cache, 10)];
-            return $value;
+            return substr($this->getCache($this->getFile($key)), 10);
         }
         return $default;
     }
