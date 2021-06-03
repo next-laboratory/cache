@@ -41,7 +41,8 @@ class File extends Driver
     {
         $cacheFile = $this->getFile($key);
         if (file_exists($cacheFile)) {
-            $expire = hexdec(substr($this->getCache($cacheFile), 0, 10));
+            $expire = unserialize($this->getCache($cacheFile))[0];
+//            $expire = hexdec(substr($this->getCache($cacheFile), 0, 10));
             if (0 !== $expire && filemtime($cacheFile) + $expire < time()) {
                 $this->remove($key);
                 return false;
@@ -120,22 +121,25 @@ class File extends Driver
     public function get($key, $default = null)
     {
         if ($this->has($key)) {
-            return substr($this->getCache($this->getFile($key)), 10);
+            return unserialize($this->getCache($this->getFile($key)))[1];
         }
         return $default;
     }
 
     /**
-     * 缓存设置
+     * 设置缓存
      * @param string $key
-     * @param string $value
+     * 缓存名称
+     * @param mixed $value
+     * 缓存值
+     * @param null $ttl
+     * 缓存有效期
      * @return false|int
      * false 写入失败，int 写入的字节
      */
     public function set($key, $value, $ttl = NULL)
     {
-        $ttl = str_pad(dechex((int)$ttl), 10, '0', STR_PAD_LEFT);
-        return file_put_contents($this->getFile($key), $ttl . $value);
+        return file_put_contents($this->getFile($key), serialize([(int)$ttl, $value]));
     }
 
     /**
