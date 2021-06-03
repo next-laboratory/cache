@@ -33,10 +33,10 @@ class Redis extends Driver
     /**
      * 初始化
      * Redis constructor.
-     * @param $config
+     * @param array $config
      * @throws \Exception
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
         $this->redis      = new \Redis();
         $this->retryTimes = $config['retry'] ?? 0;

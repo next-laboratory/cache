@@ -3,25 +3,21 @@ declare(strict_types=1);
 
 namespace Max\Cache;
 
-use Max\Foundation\App;
-
 /**
  * @method get(string $key) 查询缓存
- * @method set(string $key, $value, $timeout = null) 查询缓存
+ * @method set(string $key, $value, int $ttl = null) 查询缓存
+ * @method bool has(string $key) 判断是否有缓存
+ * @method bool delete(string $key) 删除缓存
+ * @method bool clear() 清空缓存
  * Class Setter
  * @package Max\Cache
  */
 class Setter
 {
-    /**
-     * App示例
-     * @var App $app
-     */
-    protected $app;
 
     /**
      * 驱动实例
-     * @var mixed|object
+     * @var object
      */
     protected $driver;
 
@@ -31,11 +27,10 @@ class Setter
     const NAMESPACE = '\\Max\\Cache\\Drivers\\';
 
     /**
-     * 实例化驱动
      * Setter constructor.
-     * @param App $app
+     * @param array $config
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
         $type         = $config['default'];
         $driver       = self::NAMESPACE . ucfirst($type);

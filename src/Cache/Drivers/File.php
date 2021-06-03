@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Max\Cache\Drivers;
 
 use Max\Cache\Driver;
-use Max\Foundation\App;
 
 class File extends Driver
 {
@@ -22,11 +21,12 @@ class File extends Driver
     protected $cache = [];
 
     /**
-     * 初始化缓存路径
+     * 初始化
      * File constructor.
+     * @param array $config
      * @throws \Exception
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
         if (file_exists($path = $config['path'])) {
             if (is_file($path)) {

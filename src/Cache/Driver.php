@@ -30,10 +30,12 @@ abstract class Driver implements CacheInterface
 
     public function delete($key)
     {
+        // TODO
     }
 
     public function clear()
     {
+        // TODO
     }
 
     public function getMultiple($keys, $default = null)
