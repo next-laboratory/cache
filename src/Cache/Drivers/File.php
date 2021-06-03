@@ -26,9 +26,9 @@ class File extends Driver
      * File constructor.
      * @throws \Exception
      */
-    public function __construct(App $app)
+    public function __construct($config)
     {
-        $this->path = env('cache_path') . 'app' . DIRECTORY_SEPARATOR;
+        $this->path = $config['path'];
         \Max\Tools\File::mkdir($this->path);
     }
 

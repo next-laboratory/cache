@@ -22,11 +22,10 @@ class Memcached extends Driver
      * 连接服务器
      * Memcached constructor.
      * @param $config
-     * @param \Memcached $memcached
      */
-    public function __construct($config, \Memcached $memcached)
+    public function __construct($config)
     {
-        $this->memcached = $memcached;
+        $this->memcached = new \Memcached();
         $this->memcached->addServer($config['host'] ?? '127.0.0.1', $config['post'] ?? 11211);
     }
 

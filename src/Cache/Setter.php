@@ -35,13 +35,15 @@ class Setter
      * Setter constructor.
      * @param App $app
      */
-    public function __construct(App $app)
+    public function __construct($type, $config)
     {
-        $this->app    = $app;
-        $this->driver = $app->make(
-            self::NAMESPACE . ucfirst($app->config->get('cache.default')),
-            [$app->config->getDefault('cache')]
-        );
+//        $this->app    = $app;
+        $driver       = self::NAMESPACE . ucfirst($type);
+        $this->driver = new $driver($config);
+//        $this->driver = $app->make(
+//            self::NAMESPACE . ucfirst($app->config->get('cache.default')),
+//            [$app->config->getDefault('cache')]
+//        );
     }
 
     /**

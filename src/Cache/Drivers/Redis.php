@@ -31,15 +31,14 @@ class Redis extends Driver
     protected $retryTimes = 0;
 
     /**
-     * 初始化Redis,建立连接
+     * 初始化
      * Redis constructor.
      * @param $config
-     * @param \Redis $redis
      * @throws \Exception
      */
-    public function __construct($config, \Redis $redis)
+    public function __construct($config)
     {
-        $this->redis      = $redis;
+        $this->redis      = new \Redis();
         $this->retryTimes = $config['retry'] ?? 0;
         $this->connect($config)
             ->auth($config['auth'] ?? null)
