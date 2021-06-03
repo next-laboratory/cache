@@ -9,6 +9,13 @@ abstract class Driver implements CacheInterface
 {
 
     /**
+     * 构造方法
+     * Driver constructor.
+     * @param array $config
+     */
+    abstract public function __construct(array $config);
+
+    /**
      * 检查key是否是一个合法的类型
      * @param $key
      * @return $this

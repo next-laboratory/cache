@@ -20,6 +20,7 @@ namespace {
 
 namespace Max {
 
+    use Max\Cache\Setter;
     use Max\Contracts\Service;
 
     class CacheService extends Service
@@ -32,6 +33,9 @@ namespace Max {
 
         public function boot()
         {
+            $config = $this->app->config->get('cache');
+            $setter = new Setter($config);
+            $this->app->set(Setter::class, $setter);
         }
 
     }

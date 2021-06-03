@@ -26,10 +26,17 @@ class File extends Driver
      * File constructor.
      * @throws \Exception
      */
-    public function __construct(App $app)
+    public function __construct($config)
     {
-        $this->path = env('cache_path') . 'app' . DIRECTORY_SEPARATOR;
-        \Max\Tools\File::mkdir($this->path);
+        $path = $config['path'];
+        if (file_exists($path)) {
+            if (is_file($path)) {
+                throw new \Exception('已经存在同名文件，不能创建文件夹!');
+            }
+        } else {
+            mkdir($path, 0777, true);
+        }
+        $this->path = rtrim($path, '/'). '/';
     }
 
     /**
@@ -41,7 +48,7 @@ class File extends Driver
     {
         $cacheFile = $this->getFile($key);
         if (file_exists($cacheFile)) {
-            $expire = hexdec(substr($this->getCache($cacheFile), 0, 10));
+            $expire = (int)unserialize($this->getCache($cacheFile))[0];
             if (0 !== $expire && filemtime($cacheFile) + $expire < time()) {
                 $this->remove($key);
                 return false;
@@ -49,6 +56,59 @@ class File extends Driver
             return true;
         }
         return false;
+    }
+
+    /**
+     * 删除文件缓存，缓存不存在直接返回true
+     * @param string $key
+     * @return bool|void
+     */
+    public function delete($key)
+    {
+        if ($this->has($key)) {
+            return $this->remove($key);
+        }
+        return true;
+    }
+
+    /**
+     * 文件缓存设置
+     * @param string $key
+     * @param null $default
+     * @return false|mixed|string|void
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function get($key, $default = null)
+    {
+        if ($this->has($key)) {
+            return unserialize($this->getCache($this->getFile($key)))[1];
+        }
+        return $default;
+    }
+
+    /**
+     * 设置缓存
+     * @param string $key
+     * 缓存名称
+     * @param mixed $value
+     * 缓存值
+     * @param null $ttl
+     * 缓存有效期
+     * @return false|int
+     * false 写入失败，int 写入的字节
+     */
+    public function set($key, $value, $ttl = NULL)
+    {
+        return file_put_contents($this->getFile($key), serialize([(int)$ttl, $value]));
+    }
+
+    /**
+     * 清空cache
+     * @return bool|void
+     */
+    public function clear()
+    {
+
     }
 
     /**
@@ -60,7 +120,7 @@ class File extends Driver
     {
         if (!isset($this->cache[$cacheFile])) {
             if (false === ($value = file_get_contents($cacheFile))) {
-                throw new \InvalidArgumentException('Cache not found: ' . $key, 999);
+                throw new \InvalidArgumentException('Cache not found: ' . $cacheFile, 999);
             }
             $this->cache[$cacheFile] = $value;
         }
@@ -88,19 +148,6 @@ class File extends Driver
     }
 
     /**
-     * 删除文件缓存，缓存不存在直接返回true
-     * @param string $key
-     * @return bool|void
-     */
-    public function delete($key)
-    {
-        if ($this->has($key)) {
-            return $this->remove($key);
-        }
-        return true;
-    }
-
-    /**
      * 根据key获取文件
      * @param $key
      * @return string
@@ -109,46 +156,5 @@ class File extends Driver
     {
         return $this->path . $this->getID($key);
     }
-
-    /**
-     * 文件缓存设置
-     * @param string $key
-     * @param null $default
-     * @return false|mixed|string|void
-     * @throws \Psr\SimpleCache\InvalidArgumentException
-     */
-    public function get($key, $default = null)
-    {
-        if ($this->has($key)) {
-            $cache = $this->getCache($this->getFile($key));
-            [$expire, $value] = [substr($cache, 0, 10), substr($cache, 10)];
-            return $value;
-        }
-        return $default;
-    }
-
-    /**
-     * 缓存设置
-     * @param string $key
-     * @param string $value
-     * @return false|int
-     * false 写入失败，int 写入的字节
-     */
-    public function set($key, $value, $ttl = NULL)
-    {
-        $ttl = str_pad(dechex((int)$ttl), 10, '0', STR_PAD_LEFT);
-        return file_put_contents($this->getFile($key), $ttl . $value);
-    }
-
-    /**
-     * 清空cache
-     * @return bool|void
-     */
-    public function clear()
-    {
-        //TODO debug
-//        array_map('unlink', glob($this->path . '*'));
-    }
-
 
 }
