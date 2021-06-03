@@ -35,8 +35,8 @@ class File extends Driver
             }
         } else {
             mkdir($path, 0777, true);
-            $this->path = $path;
         }
+        $this->path = rtrim($path, '/'). '/';
     }
 
     /**
