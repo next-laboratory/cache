@@ -28,8 +28,15 @@ class File extends Driver
      */
     public function __construct($config)
     {
-        $this->path = $config['path'];
-        \Max\Tools\File::mkdir($this->path);
+        $path = $config['path'];
+        if (file_exists($path)) {
+            if (is_file($path)) {
+                throw new \Exception('已经存在同名文件，不能创建文件夹!');
+            }
+        } else {
+            mkdir($path, 0777, true);
+            $this->path = $path;
+        }
     }
 
     /**
