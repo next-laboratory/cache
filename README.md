@@ -92,7 +92,9 @@ return [
     ],
 
     //文件缓存
-    'file'      => [],
+    'file'      => [
+        'path' => env('cache_path') . 'app' . DIRECTORY_SEPARATOR,
+    ],
 
     //memcached缓存
     'memcached' => [
