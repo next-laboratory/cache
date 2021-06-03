@@ -28,15 +28,14 @@ class File extends Driver
      */
     public function __construct($config)
     {
-        $path = $config['path'];
-        if (file_exists($path)) {
+        if (file_exists($path = $config['path'])) {
             if (is_file($path)) {
                 throw new \Exception('已经存在同名文件，不能创建文件夹!');
             }
         } else {
             mkdir($path, 0777, true);
         }
-        $this->path = rtrim($path, '/'). '/';
+        $this->path = rtrim($path, DIRECTORY_SEPARATOR) . '/';
     }
 
     /**

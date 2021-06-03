@@ -37,10 +37,9 @@ class Setter
      */
     public function __construct($config)
     {
-        $type   = $config['default'];
-        $config = $config[$type];
+        $type         = $config['default'];
         $driver       = self::NAMESPACE . ucfirst($type);
-        $this->driver = new $driver($config);
+        $this->driver = new $driver($config[$type]);
     }
 
     /**
