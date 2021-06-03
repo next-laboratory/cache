@@ -32,6 +32,9 @@ class File extends Driver
             if (is_file($path)) {
                 throw new \Exception('已经存在同名文件，不能创建文件夹!');
             }
+            if (!is_writable($path) || !is_readable($path)) {
+                chmod($path, 0777);
+            }
         } else {
             mkdir($path, 0777, true);
         }
