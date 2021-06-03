@@ -41,8 +41,7 @@ class File extends Driver
     {
         $cacheFile = $this->getFile($key);
         if (file_exists($cacheFile)) {
-            $expire = unserialize($this->getCache($cacheFile))[0];
-//            $expire = hexdec(substr($this->getCache($cacheFile), 0, 10));
+            $expire = (int)unserialize($this->getCache($cacheFile))[0];
             if (0 !== $expire && filemtime($cacheFile) + $expire < time()) {
                 $this->remove($key);
                 return false;
@@ -50,42 +49,6 @@ class File extends Driver
             return true;
         }
         return false;
-    }
-
-    /**
-     * 取得缓存内容，如果不存在会从文件中取得，否则在内存中取
-     * @param $cacheFile
-     * @return mixed
-     */
-    protected function getCache($cacheFile)
-    {
-        if (!isset($this->cache[$cacheFile])) {
-            if (false === ($value = file_get_contents($cacheFile))) {
-                throw new \InvalidArgumentException('Cache not found: ' . $cacheFile, 999);
-            }
-            $this->cache[$cacheFile] = $value;
-        }
-        return $this->cache[$cacheFile];
-    }
-
-    /**
-     * 缓存hash
-     * @param string $key
-     * @return string
-     */
-    protected function getID(string $key)
-    {
-        return md5(strtolower($key));
-    }
-
-    /**
-     * 删除某一个缓存，必须在已知缓存存在的情况下调用，否则会报错
-     * @param $key
-     * @return bool
-     */
-    protected function remove($key)
-    {
-        return unlink($this->getFile($key));
     }
 
     /**
@@ -99,16 +62,6 @@ class File extends Driver
             return $this->remove($key);
         }
         return true;
-    }
-
-    /**
-     * 根据key获取文件
-     * @param $key
-     * @return string
-     */
-    protected function getFile($key)
-    {
-        return $this->path . $this->getID($key);
     }
 
     /**
@@ -148,9 +101,53 @@ class File extends Driver
      */
     public function clear()
     {
-        //TODO debug
-//        array_map('unlink', glob($this->path . '*'));
+
     }
 
+    /**
+     * 取得缓存内容，如果不存在会从文件中取得，否则在内存中取
+     * @param $cacheFile
+     * @return mixed
+     */
+    protected function getCache($cacheFile)
+    {
+        if (!isset($this->cache[$cacheFile])) {
+            if (false === ($value = file_get_contents($cacheFile))) {
+                throw new \InvalidArgumentException('Cache not found: ' . $cacheFile, 999);
+            }
+            $this->cache[$cacheFile] = $value;
+        }
+        return $this->cache[$cacheFile];
+    }
+
+    /**
+     * 缓存hash
+     * @param string $key
+     * @return string
+     */
+    protected function getID(string $key)
+    {
+        return md5(strtolower($key));
+    }
+
+    /**
+     * 删除某一个缓存，必须在已知缓存存在的情况下调用，否则会报错
+     * @param $key
+     * @return bool
+     */
+    protected function remove($key)
+    {
+        return unlink($this->getFile($key));
+    }
+
+    /**
+     * 根据key获取文件
+     * @param $key
+     * @return string
+     */
+    protected function getFile($key)
+    {
+        return $this->path . $this->getID($key);
+    }
 
 }
