@@ -34,8 +34,7 @@ namespace Max {
         public function boot()
         {
             $config = $this->app->config->get('cache');
-            $setter = new Setter($config);
-            $this->app->set(Setter::class, $setter);
+            $this->app->set(Setter::class, new Setter($config));
         }
 
     }
